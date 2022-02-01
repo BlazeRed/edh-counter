@@ -4,7 +4,7 @@
       <v-spacer />
       <v-avatar size="32">
         <a class="link" href="https://gatherer.wizards.com/" target="_blank">
-          <v-icon>mdi-book-open-variant</v-icon>
+          <v-icon color="#dddd">mdi-book-open-variant</v-icon>
         </a>
       </v-avatar>
     </v-app-bar>

@@ -6,9 +6,10 @@
 
 <style scoped>
 .item {
-  width: 3em;
+  width: 4.5em;
+  height: 4.5em;
   text-align: center;
-  padding: 0.4em;
+  padding: 1.4em;
   border-radius: 0.5em;
   cursor: pointer;
 }

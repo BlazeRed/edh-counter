@@ -1,5 +1,6 @@
 <template>
   <v-container class="container">
+    <h1>Elder Dragon Highlander</h1>
     <v-card>
       <v-card-title>Players</v-card-title>
       <v-card-subtitle>Set number of players:</v-card-subtitle>
@@ -43,12 +44,15 @@
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 4em;
 }
 
 .selectable-items-container {
   display: flex;
+  flex-wrap: wrap;
   gap: 1em;
 }
 </style>
