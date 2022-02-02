@@ -6,6 +6,28 @@ import vuetify from "./plugins/vuetify";
 
 Vue.config.productionTip = false;
 
+Vue.mixin({
+  data: () => ({
+    isPortrait: false,
+  }),
+
+  beforeDestroy() {
+    if (typeof window === "undefined") return;
+    window.removeEventListener("resize", this.onResize, { passive: true });
+  },
+
+  mounted() {
+    this.onResize();
+    window.addEventListener("resize", this.onResize, { passive: true });
+  },
+
+  methods: {
+    onResize() {
+      this.isPortrait = window.innerWidth < 600;
+    },
+  },
+});
+
 new Vue({
   router,
   vuetify,

@@ -1,7 +1,7 @@
 <template>
   <div class="container fill-height">
     <v-card>
-      <div v-bind:class="isMobile ? '' : 'landscape-view'">
+      <div v-bind:class="isPortrait ? '' : 'landscape-view'">
         <div>
           <v-card-title>Players</v-card-title>
           <v-card-subtitle>Set number of players:</v-card-subtitle>
@@ -15,7 +15,7 @@
             />
           </v-card-text>
         </div>
-        <v-divider v-if="!isMobile" vertical inset />
+        <v-divider v-if="!isPortrait" vertical inset />
         <div>
           <v-card-title>Life</v-card-title>
           <v-card-subtitle>Set a starting life:</v-card-subtitle>
@@ -77,7 +77,6 @@ export default {
   components: { SelectableItem },
 
   data: () => ({
-    isMobile: false,
     playersOptions: [
       { value: "1", groupName: "players" },
       { value: "2", groupName: "players" },
@@ -95,20 +94,7 @@ export default {
     selectedLife: undefined,
   }),
 
-  beforeDestroy() {
-    if (typeof window === "undefined") return;
-    window.removeEventListener("resize", this.onResize, { passive: true });
-  },
-
-  mounted() {
-    this.onResize();
-    window.addEventListener("resize", this.onResize, { passive: true });
-  },
-
   methods: {
-    onResize() {
-      this.isMobile = window.innerWidth < 600;
-    },
     startGame() {
       this.$router.push({
         path: `/counter/${this.selectedPlayers}/${this.selectedLife}`,
