@@ -1,6 +1,6 @@
 <template>
   <div v-bind:class="'item ' + itemStyle" v-on:click="updateSelectedItem">
-    {{ data.value }}
+    <span class="body-1">{{ data.value }}</span>
   </div>
 </template>
 
@@ -15,12 +15,12 @@
 }
 
 .not-selected {
-  border: 2px solid #dddd;
+  border: 2px solid var(--v-primary-base);
 }
 
 .selected {
-  border: 2px solid #1b9df7;
-  background-color: #1b9df7;
+  border: 2px solid var(--v-accent-base);
+  background-color: var(--v-accent-base);
   color: #333;
 }
 </style>

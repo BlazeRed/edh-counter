@@ -1,42 +1,48 @@
 <template>
-  <v-container class="container">
-    <h1>Elder Dragon Highlander</h1>
+  <div class="container fill-height">
     <v-card>
-      <v-card-title>Players</v-card-title>
-      <v-card-subtitle>Set number of players:</v-card-subtitle>
+      <div v-bind:class="isMobile ? '' : 'landscape-view'">
+        <div>
+          <v-card-title>Players</v-card-title>
+          <v-card-subtitle>Set number of players:</v-card-subtitle>
 
-      <v-card-text class="selectable-items-container">
-        <selectable-item
-          v-for="opt in playersOptions"
-          v-model="selectedPlayers"
-          v-bind:key="opt.value"
-          v-bind:data="opt"
-        />
-      </v-card-text>
-
-      <v-card-title>Life</v-card-title>
-      <v-card-subtitle>Set a starting life:</v-card-subtitle>
-      <v-card-text class="selectable-items-container">
-        <selectable-item
-          v-for="opt in lifeOptions"
-          v-model="selectedLife"
-          v-bind:key="opt.value"
-          v-bind:data="opt"
-        />
-      </v-card-text>
+          <v-card-text class="selectable-items-container">
+            <selectable-item
+              v-for="opt in playersOptions"
+              v-model="selectedPlayers"
+              v-bind:key="opt.value"
+              v-bind:data="opt"
+            />
+          </v-card-text>
+        </div>
+        <v-divider v-if="!isMobile" vertical inset />
+        <div>
+          <v-card-title>Life</v-card-title>
+          <v-card-subtitle>Set a starting life:</v-card-subtitle>
+          <v-card-text class="selectable-items-container">
+            <selectable-item
+              v-for="opt in lifeOptions"
+              v-model="selectedLife"
+              v-bind:key="opt.value"
+              v-bind:data="opt"
+            />
+          </v-card-text>
+        </div>
+      </div>
 
       <v-card-actions>
         <v-spacer />
         <v-btn
           v-bind:disabled="!selectedPlayers || !selectedLife"
-          color="#1b9df7"
+          v-on:click="startGame"
+          color="accent"
           text
         >
           Play
         </v-btn>
       </v-card-actions>
     </v-card>
-  </v-container>
+  </div>
 </template>
 
 <style scoped>
@@ -48,6 +54,11 @@
   justify-content: center;
   align-items: center;
   gap: 4em;
+}
+
+.landscape-view {
+  display: flex;
+  direction: row;
 }
 
 .selectable-items-container {
@@ -66,6 +77,7 @@ export default {
   components: { SelectableItem },
 
   data: () => ({
+    isMobile: false,
     playersOptions: [
       { value: "1", groupName: "players" },
       { value: "2", groupName: "players" },
@@ -82,5 +94,26 @@ export default {
     selectedPlayers: undefined,
     selectedLife: undefined,
   }),
+
+  beforeDestroy() {
+    if (typeof window === "undefined") return;
+    window.removeEventListener("resize", this.onResize, { passive: true });
+  },
+
+  mounted() {
+    this.onResize();
+    window.addEventListener("resize", this.onResize, { passive: true });
+  },
+
+  methods: {
+    onResize() {
+      this.isMobile = window.innerWidth < 600;
+    },
+    startGame() {
+      this.$router.push({
+        path: `/counter/${this.selectedPlayers}/${this.selectedLife}`,
+      });
+    },
+  },
 };
 </script>
