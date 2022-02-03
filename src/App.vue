@@ -44,7 +44,6 @@ export default {
 
   computed: {
     version() {
-      console.log("version", process.env.VUE_APP_VERSION)
       return process.env.VUE_APP_VERSION;
     },
   },
