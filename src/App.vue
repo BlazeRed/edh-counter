@@ -8,7 +8,7 @@
       >
         mdi-chevron-left
       </v-icon>
-      <span>Elder Dragon Highlander</span>
+      <span>Elder Dragon Highlander (Beta {{ version }})</span>
       <v-spacer />
       <v-avatar size="32">
         <a class="link" href="https://gatherer.wizards.com/" target="_blank">
@@ -41,6 +41,13 @@ body {
 <script>
 export default {
   name: "App",
+
+  computed: {
+    version() {
+      console.log("version", process.env.VUE_APP_VERSION)
+      return process.env.VUE_APP_VERSION;
+    },
+  },
 
   methods: {
     backToHome() {
