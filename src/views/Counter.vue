@@ -3,7 +3,11 @@
     <PlayerCounter
       v-for="player in players"
       v-bind:key="player"
-      v-bind:data="{ name: player, totalPlayers: players }"
+      v-bind:data="{
+        name: player,
+        totalPlayers: players,
+        lifeTotal: lifeTotal,
+      }"
     >
     </PlayerCounter>
   </div>

@@ -21,6 +21,12 @@ Vue.mixin({
     window.addEventListener("resize", this.onResize, { passive: true });
   },
 
+  computed: {
+    currentRouteName() {
+      return this.$route.name;
+    },
+  },
+
   methods: {
     onResize() {
       this.isPortrait = window.innerWidth < 600;

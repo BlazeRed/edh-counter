@@ -1,13 +1,81 @@
 <template>
-  <div class="container" v-bind:style="spanCounter">Player {{ data.name }}</div>
+  <div
+    class="container"
+    v-bind:class="isDefeated ? 'lose-border' : 'idle-border'"
+    v-bind:style="spanCounter"
+  >
+    <div class="counter-data-layout">
+      <span class="text-body-2">Player {{ data.name }}</span>
+      <div row>
+        <v-btn
+          v-on:click="removeLife()"
+          class="text-body-2 font-weight-bold"
+          v-bind:class="
+            isDefeated ? 'update-life-outlined-lose' : 'update-life-outlined'
+          "
+          outlined
+          large
+        >
+          -
+        </v-btn>
+        <span class="text-h2">{{ currentLife }}</span>
+        <v-btn
+          v-on:click="addLife()"
+          class="text-body-2 font-weight-bold"
+          v-bind:class="
+            isDefeated ? 'update-life-outlined-lose' : 'update-life-outlined'
+          "
+          outlined
+          large
+        >
+          +
+        </v-btn>
+      </div>
+      <v-icon>mdi-menu</v-icon>
+    </div>
+  </div>
 </template>
 
 <style scoped>
 .container {
   width: 100%;
   height: 100%;
+}
+
+.idle-border {
   border: 2px solid var(--v-accent-base);
   border-radius: 0.5em;
+}
+
+.lose-border {
+  border: 2px solid var(--v-lose-base);
+  border-radius: 0.5em;
+}
+
+.counter-data-layout {
+  display: flex;
+  gap: 0.2em;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+div[row] {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  align-items: center;
+  justify-content: center;
+}
+
+.update-life-outlined {
+  border: thin solid var(--v-accent-base);
+  min-width: 1em !important;
+}
+
+.update-life-outlined-lose {
+  border: thin solid var(--v-lose-base);
+  min-width: 1em !important;
 }
 </style>
 
@@ -19,7 +87,20 @@ export default {
     data: { type: Object },
   },
 
-  data: () => ({}),
+  data: () => ({
+    currentLife: undefined,
+    isDefeated: false,
+  }),
+
+  beforeMount() {
+    this.currentLife = this.data.lifeTotal;
+  },
+
+  watch: {
+    currentLife(nv) {
+      if (nv <= 0) this.isDefeated = true;
+    },
+  },
 
   computed: {
     isOdd() {
@@ -51,9 +132,16 @@ export default {
       ) {
         layout = "grid-column: span 2";
       }
-
-      console.log(layout);
       return layout;
+    },
+  },
+
+  methods: {
+    removeLife() {
+      this.currentLife -= 1;
+    },
+    addLife() {
+      this.currentLife += 1;
     },
   },
 };

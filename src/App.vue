@@ -1,6 +1,13 @@
 <template>
   <v-app class="custom-font">
     <v-app-bar color="transparent" app absolute flat short>
+      <v-icon
+        v-if="currentRouteName != 'Home'"
+        v-on:click="backToHome"
+        class="me-2"
+      >
+        mdi-chevron-left
+      </v-icon>
       <span>Elder Dragon Highlander</span>
       <v-spacer />
       <v-avatar size="32">
@@ -34,5 +41,11 @@ body {
 <script>
 export default {
   name: "App",
+
+  methods: {
+    backToHome() {
+      this.$router.back();
+    },
+  },
 };
 </script>
