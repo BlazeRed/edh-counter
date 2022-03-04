@@ -1,6 +1,6 @@
 <template>
   <v-app class="custom-font">
-    <v-app-bar color="transparent" app absolute flat short>
+    <v-app-bar color="transparent" short app absolute flat>
       <v-icon
         v-if="currentRouteName != 'Home'"
         v-on:click="backToHome"
@@ -44,7 +44,6 @@ export default {
 
   computed: {
     version() {
-      console.log("version", process.env.VUE_APP_VERSION)
       return process.env.VUE_APP_VERSION;
     },
   },

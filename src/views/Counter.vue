@@ -1,11 +1,12 @@
 <template>
-  <div v-bind:style="gridStyle" class="container fill-height">
+  <div v-bind:style="gridStyle" class="container">
     <PlayerCounter
-      v-for="player in players"
+      v-for="(player, i) in players"
       v-bind:key="player"
       v-bind:data="{
         name: player,
-        totalPlayers: players,
+        index: i,
+        allPlayers: players,
         lifeTotal: lifeTotal,
       }"
     >
@@ -15,6 +16,9 @@
 
 <style scoped>
 .container {
+  width: 100%;
+  height: 100%;
+  padding: 0 1em 1em 1em;
   display: grid;
   place-items: center;
   gap: 1em;
@@ -36,26 +40,29 @@ export default {
   }),
 
   beforeMount() {
-    this.players = parseInt(this.$route.params.players);
+    this.players = this.$store.getters.getPlayers;
     this.lifeTotal = parseInt(this.$route.params.life);
   },
 
   computed: {
+    totalPlayers() {
+      return this.players.length;
+    },
     gridStyle() {
       let layout = "";
 
       // Landscape mode
       if (!this.isPortrait) {
-        if (this.players > 1 && this.players < 5) {
+        if (this.totalPlayers > 1 && this.totalPlayers < 5) {
           layout = "grid-template-columns: repeat(2, 1fr);";
-        } else if (this.players >= 5) {
+        } else if (this.totalPlayers >= 5) {
           layout = "grid-template-columns: repeat(3, 1fr);";
         }
         // Portrait mode
-      } else if (this.players >= 4) {
+      } else if (this.totalPlayers >= 4) {
         layout = "grid-template-columns: repeat(2, 1fr);";
       } else {
-        layout = `grid-template-rows: repeat(${this.players}, 1fr);`;
+        layout = `grid-template-rows: repeat(${this.totalPlayers}, 1fr);`;
       }
       return layout;
     },

@@ -1,5 +1,5 @@
 <template>
-  <div class="container fill-height">
+  <div class="container">
     <v-card>
       <div v-bind:class="isPortrait ? '' : 'landscape-view'">
         <div>
@@ -47,8 +47,8 @@
 
 <style scoped>
 .container {
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -96,8 +96,16 @@ export default {
 
   methods: {
     startGame() {
+      let names = [];
+      // Generate default names
+      for (let i = 0; i < this.selectedPlayers; i++) {
+        names[i] = `Player ${i}`;
+      }
+      // Save auto generates names
+      this.$store.commit("setPlayers", names);
+
       this.$router.push({
-        path: `/counter/${this.selectedPlayers}/${this.selectedLife}`,
+        path: `/counter/${this.selectedLife}`,
       });
     },
   },

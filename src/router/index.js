@@ -12,7 +12,7 @@ const routes = [
     component: Home,
   },
   {
-    path: "/counter/:players/:life",
+    path: "/counter/:life",
     name: "Counter",
     component: Counter,
   },
