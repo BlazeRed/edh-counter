@@ -53,8 +53,18 @@
         <div v-if="!isPortrait">
           <v-card-text class="pt-4">
             <div row gap>
-              <v-text-field v-model="playerName" hide-details outlined />
-              <v-btn v-on:click="setNameDialog = false" color="accent" text>
+              <v-text-field
+                v-model="playerName"
+                v-bind:rules="[rules.required]"
+                hide-details
+                outlined
+              />
+              <v-btn
+                v-on:click="setName()"
+                v-bind:disabled="playerName.length <= 0"
+                color="accent"
+                text
+              >
                 Done
               </v-btn>
             </div>
@@ -248,8 +258,6 @@ export default {
     this.otherPlayers.map((o) => {
       this.oppoData[o] = 0;
     });
-
-    // console.log(this.oppoData)
   },
 
   watch: {
@@ -280,7 +288,7 @@ export default {
       return this.data.allPlayers.length;
     },
     otherPlayers() {
-      return this.data.allPlayers.filter((p) => p != this.playerName);
+      return this.$store.getters.getPlayers.filter((p) => p != this.playerName);
     },
     isOdd() {
       return this.totalPlayers % 2;
